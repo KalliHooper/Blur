@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Blur and Border <span class='hl'></span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="0" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#f168cf">
+  </div>
+
+
+ 
+  <div>
+    <button onclick="prev()"> Prev </button>
+    <img id="slider" src="me3.PNG" 
+      width="300px" height="300px"/>
+    <button onclick="next()"> Next </button>
+  </div>
+
+  <style>
+
+:root {
+  --base: #f168cf;
+  --spacing:10px;
+  --blur:10px;
+}
+img{
+  padding:var(--spacing);
+  background: var(--base);
+  filter: blur(var(--blur));
+
+
+}
+.h1{
+  color:var(--base);
+
+}
+button {
+    margin-top:50px;
+    float:center;
+    height:50px;
+}
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #fdfdfd;
+      color: rgb(63, 37, 179);
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width:100px;
+   
+    }
+  </style>
+
+  <script>
+    const inputs=document.querySelectorAll('.controls input');
+
+    function handleUpdate(){
+      console.log(this.value);
+      const suffix=this.dataset.sizing || '';
+      console.log(suffix);
+      document.documentElement.style.setProperty(`--${this.name}`,this.value+suffix);
+
+    }
+    inputs.forEach(input=>input.addEventListener('change', handleUpdate));
+    inputs.forEach(input=>input.addEventListener('mousemove', handleUpdate));
+
+     var images = [
+    'me3.PNG', 
+    'me2.PNG', 
+    'me4.PNG'
+];
+var num = 0;
+function next() {
+    var slider = document.getElementById('slider');
+    num++;
+    if(num >= images.length) {
+        num = 0;
+    }
+    slider.src = images[num];
+}
+function prev() {
+    var slider = document.getElementById('slider');
+    num--;
+    if(num < 0) {
+        num = images.length-1;
+    }
+    slider.src = images[num];
+}
+
+var person = prompt("Please enter your name", "Brennan");
+
+if (person == Kalli) {
+    window.alert = ("Not a nerd");
+} else {
+    window.alert = ("Hello " + person + "you are a nerd");
+}
+  </script>
+
+</body>
+</html>
